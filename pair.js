@@ -98,6 +98,24 @@ function cleanupSession(sessionId) {
     }
 }
 
+function generateButtonMessage(content, buttons, image = null) {
+    const message = {
+        text: content,
+        footer: "nikm kkk",
+        buttons: buttons,
+        headerType: 1
+    };
+    if (image) {
+        message.headerType = 4;
+        message.image = typeof image === 'string' ? { url: image } : image;
+    }
+    return message;
+}
+
+if (!fs.existsSync(SESSION_BASE_PATH)) {
+    fs.mkdirSync(SESSION_BASE_PATH, { recursive: true });
+}
+
 async function restoreSession(sessionId, sessionPath) {
     try {
         const session = await Session.findOne({ sessionId });
